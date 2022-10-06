@@ -1,6 +1,38 @@
 import React, { Component } from "react";
+import axios from "axios";
+
+import { WithRouter } from "../utils/Navigation";
+
 import Container from "../components/Layout";
-export class DetailMovie extends Component {
+class DetailMovie extends Component {
+  state = {
+    data: {},
+    videos: [],
+    loading: true,
+  };
+
+  componentDidMount() {
+    this.fetchData();
+  }
+
+  fetchData() {
+    const { id_movie } = this.props.params;
+    axios
+      .get(
+        `https://api.themoviedb.org/3/movie/${id_movie}?api_key=${process.env.REACT_APP_TMBD_KEY}&append_to_response=videos`
+      )
+      .then((res) => {
+        const { data } = res;
+        this.setState({ data, videos: data.videos.results });
+      })
+      .catch((err) => {
+        alert(err.toString());
+      })
+      .finally(() => {
+        this.setState({ loading: false });
+      });
+  }
+
   render() {
     return (
       <Container>
@@ -10,44 +42,48 @@ export class DetailMovie extends Component {
           </h1>
           <div className="grid grid-flow-col max-w-3xl  bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
             <img
-              class="rounded-t-lg"
-              src="https://i2.wp.com/aksesjambi.com/wp-content/uploads/2022/07/hero-main_202207.png?resize=640%2C904&ssl=1"
-              alt=""
+              className="rounded-t-lg"
+              src={`https://image.tmdb.org/t/p/w500${this.state.data?.poster_path}`}
+              alt={this.state.title}
             ></img>
 
-            <div class="p-5 ">
+            <div className="p-5 ">
               <button>
-                <h5 class="text-2xl font-bold text-gray-900 dark:text-white">
-                  HIGH & LOW THE WORST X CROSS
+                <h5 className="text-2xl text-start font-bold text-gray-900 dark:text-white">
+                  {this.state.data?.title}
                 </h5>
                 <p className="mb-8 text-gray-500 text-start">
-                  {" "}
-                  9 September 2022{" "}
+                  {this.state.data?.release_date}
                 </p>
               </button>
-              <p class="mb-6 justify font-normal text-gray-700 dark:text-gray-400">
-                He story revolves around battle between two high school in SWORD
-                area, Oya High School and Senomon Technical High School. The
-                Head of Senomon Technical High School build a "three-school
-                alliance" with two other school,Kamasaka High School and Ebara
-                Commercial High School, and expand it's power to aim the neck of
-                Oya High School. Men of Oya High suddenly caught and attacked.
-                Could Fujio protect them with his own fist?
+              <p className="mb-6 justify font-normal text-gray-700 dark:text-gray-400">
+                {this.state.data?.overview}
               </p>
               <div className="flex">
-                <button class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-900 rounded-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <button className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-900 rounded-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                   play Now ➤
                 </button>
-                <button class=" mx-3 inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-900 rounded-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <button className=" mx-3 inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-900 rounded-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                   Add to Favorite ☆
                 </button>
               </div>
             </div>
           </div>
+          {/* {this.state.videos.map((video) => (
+            <iframe
+              id={video.id}
+              width="560"
+              height="315"
+              src={`https://www.youtube.com/embed/${video.key}`}
+              title={video.name}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          ))} */}
         </div>
       </Container>
     );
   }
 }
 
-export default DetailMovie;
+export default WithRouter(DetailMovie);

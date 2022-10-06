@@ -2,6 +2,7 @@ import { Component } from "react";
 import "../styles/App.css";
 
 import axios from "axios";
+import { WithRouter } from "../utils/Navigation";
 
 import Container from "../components/Layout";
 import Loading from "../components/Loading";
@@ -19,6 +20,20 @@ class App extends Component {
 
   componentDidMount() {
     this.fetchData();
+  }
+
+  handleFav(movie) {
+    const getMovies = localStorage.getItem("favMovies");
+    if (getMovies) {
+      // TASK MEMBUAT VALIDASI JIKA MOVIE YANG DITAMBAHKAN SUDAH ADA
+      const parsedMovies = JSON.parse(getMovies);
+      parsedMovies.push(movie);
+      const temp = JSON.stringify(parsedMovies);
+      localStorage.setItem("favMovies", temp);
+    } else {
+      const temp = JSON.stringify([movie]);
+      localStorage.setItem("favMovies", temp);
+    }
   }
 
   fetchData() {
@@ -54,7 +69,8 @@ class App extends Component {
                     key={data.id}
                     image={data.poster_path}
                     title={data.title}
-                    judul={data.title}
+                    onNavigate={() => this.props.navigate(`/detail/${data.id}`)}
+                    addFavorite={() => this.handleFav(data)}
                   />
                 ))}
           </div>
@@ -70,4 +86,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default WithRouter(App);
