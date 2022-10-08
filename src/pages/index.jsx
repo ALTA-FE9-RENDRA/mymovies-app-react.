@@ -1,89 +1,90 @@
-import { Component } from "react";
-import "../styles/App.css";
-
+import { useState, useEffect } from "react";
+import "styles/App.css";
 import axios from "axios";
-import { WithRouter } from "../utils/Navigation";
 
-import Container from "../components/Layout";
-import Loading from "../components/Loading";
-import Card from "../components/Card";
-import { ButtonPrimary } from "../components/Button";
+import { WithRouter } from "utils/Navigation";
+import { ButtonPrimary } from "components/Button";
 
-class App extends Component {
-  state = {
-    title: "Welcome",
-    datas: [],
-    skeleton: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-    loading: true,
-    page: 1,
-  };
+import Container from "components/Layout";
+import Loading from "components/Loading";
+import Card from "components/Card";
 
-  componentDidMount() {
-    this.fetchData();
-  }
+function App(props) {
+  const [datas, setDatas] = useState([]);
+  const [skeleton] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+  const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
 
-  handleFav(movie) {
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  function handleFav(movie) {
     const getMovies = localStorage.getItem("favMovies");
+    const parsedMovies = JSON.parse(getMovies);
     if (getMovies) {
-      // TASK MEMBUAT VALIDASI JIKA MOVIE YANG DITAMBAHKAN SUDAH ADA
-      const parsedMovies = JSON.parse(getMovies);
-      parsedMovies.push(movie);
-      const temp = JSON.stringify(parsedMovies);
-      localStorage.setItem("favMovies", temp);
+      let res = parsedMovies.find(({ id }) => id === movie.id);
+      // console.log(res.id);
+      if (res.id === movie.id) {
+        alert("film sudah pernah ditambahakan");
+      } else {
+        parsedMovies.push(movie);
+        const temp = JSON.stringify(parsedMovies);
+        localStorage.setItem("favMovies", temp);
+      }
     } else {
+      // alert("film sudah ada diFavorites ");
       const temp = JSON.stringify([movie]);
       localStorage.setItem("favMovies", temp);
     }
   }
 
-  fetchData() {
+  function fetchData() {
     axios
       .get(
-        `https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.REACT_APP_TMBD_KEY}&page=${this.state.page}`
+        `https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.REACT_APP_TMBD_KEY}&page=${page}`
       )
       .then((res) => {
         const { results } = res.data;
-        const newPage = this.state.page + 1;
-        const temp = [...this.state.datas];
+        const newPage = page + 1;
+        const temp = [...datas];
         temp.push(...results);
-        this.setState({ datas: temp, page: newPage });
+        setDatas(temp);
+        setPage(newPage);
       })
       .catch((err) => {
         console.log(err);
       })
       .finally(() => {
-        this.setState({ loading: false });
+        setLoading(false);
       });
   }
 
-  render() {
-    return (
-      <Container>
-        <div className="w-full flex flex-col ">
-          {/* <p>{this.state.title} | CLASS COMPONENT</p> */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mx-4">
-            {this.state.loading
-              ? this.state.skeleton.map((item) => <Loading key={item} />)
-              : this.state.datas.map((data) => (
-                  <Card
-                    key={data.id}
-                    image={data.poster_path}
-                    title={data.title}
-                    onNavigate={() => this.props.navigate(`/detail/${data.id}`)}
-                    addFavorite={() => this.handleFav(data)}
-                  />
-                ))}
-          </div>
-          <ButtonPrimary
-            label="Load more"
-            onClick={() => {
-              this.fetchData();
-            }}
-          />
+  return (
+    <Container>
+      <div className="w-full flex flex-col ">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mx-4">
+          {loading
+            ? skeleton.map((item) => <Loading key={item} />)
+            : datas.map((data) => (
+                <Card
+                  key={data.id}
+                  image={data.poster_path}
+                  title={data.title}
+                  onNavigate={() => props.navigate(`/detail/${data.id}`)}
+                  addFavorite={() => handleFav(data)}
+                />
+              ))}
         </div>
-      </Container>
-    );
-  }
+        <ButtonPrimary
+          label="Load more"
+          onClick={() => {
+            fetchData();
+          }}
+        />
+      </div>
+    </Container>
+  );
 }
 
 export default WithRouter(App);

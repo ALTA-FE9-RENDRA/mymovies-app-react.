@@ -3,10 +3,10 @@ import "../styles/App.css";
 
 import axios from "axios";
 
-import Container from "../components/Layout";
-import Loading from "../components/Loading";
-import Card from "../components/Card";
-import { ButtonPrimary } from "../components/Button";
+import Container from "components/Layout";
+import Loading from "components/Loading";
+import Card from "components/Card";
+import { ButtonPrimary } from "components/Button";
 
 class App extends Component {
   state = {

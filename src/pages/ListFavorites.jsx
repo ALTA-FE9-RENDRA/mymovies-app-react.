@@ -1,50 +1,63 @@
-import React, { Component } from "react";
-import Container from "../components/Layout";
-import Loading from "../components/Loading";
-import Card from "../components/Card";
-import { WithRouter } from "../utils/Navigation";
-class ListFavorites extends Component {
-  state = {
-    datas: [],
-    skeleton: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-    loading: true,
-  };
+import React, { useState, useEffect } from "react";
+import { WithRouter } from "utils/Navigation";
+import { useTitle } from "utils/hooks/useTitle";
 
-  componentDidMount() {
-    this.fetchData();
-  }
+import Container from "components/LayoutFav";
+import Loading from "components/Loading";
+import CardFav from "components/CardFav";
 
-  fetchData() {
+function ListFavorites(props) {
+  const [datas, setDatas] = useState([]);
+  const [skeleton] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+  const [loading, setLoading] = useState(true);
+  useTitle("My Favorites");
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  function fetchData() {
     const getMovies = localStorage.getItem("favMovies");
     if (getMovies) {
       const parsedMovies = JSON.parse(getMovies);
-      this.setState({ datas: parsedMovies, loading: false });
+      setDatas(parsedMovies);
+      setLoading(false);
     }
   }
 
-  handleRemove() {
-    // task membuat remove favorite
+  function handleRemove(movie) {
+    let newDatas = datas.filter(({ id }) => {
+      return id !== movie.id;
+    });
+    newDatas.join(" - ");
+    // console.log(newDatas);
+    // console.log(datas);
+    const parsed = JSON.stringify(newDatas);
+    setDatas(parsed);
+    localStorage.setItem("favMovies", parsed);
+    /*
+    fungsi untuk menghapus film dari list favorite, clue-nya pake method filter.
+    Setelah di filter, rubah state (datas) nya dengan yang sudah di filter dan juga localStorage.setItem lagi dengan value yang sudah di filter.
+    */
   }
 
-  render() {
-    return (
-      <Container>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mx-4">
-          {this.state.loading
-            ? this.state.skeleton.map((item) => <Loading key={item} />)
-            : this.state.datas.map((data) => (
-                <Card
-                  key={data.id}
-                  image={data.poster_path}
-                  title={data.title}
-                  onNavigate={() => this.props.navigate(`/detail/${data.id}`)}
-                  addFavorite={() => this.handleFav(data)}
-                />
-              ))}
-        </div>
-      </Container>
-    );
-  }
+  return (
+    <Container>
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mx-4">
+        {loading
+          ? skeleton.map((item) => <Loading key={item} />)
+          : datas.map((data) => (
+              <CardFav
+                key={data.id}
+                image={data.poster_path}
+                title={data.title}
+                onNavigate={() => props.navigate(`/detail/${data.id}`)}
+                addFavorite={() => handleRemove(data)}
+              />
+            ))}
+      </div>
+    </Container>
+  );
 }
 
 export default WithRouter(ListFavorites);
