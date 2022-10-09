@@ -9,6 +9,9 @@ import Container from "components/Layout";
 import Loading from "components/Loading";
 import Card from "components/Card";
 
+// ======== SWEET ALERT ==============
+import Swal from "sweetalert2";
+
 function App(props) {
   const [datas, setDatas] = useState([]);
   const [skeleton] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
@@ -24,9 +27,11 @@ function App(props) {
     const parsedMovies = JSON.parse(getMovies);
     if (getMovies) {
       let res = parsedMovies.find(({ id }) => id === movie.id);
+      fetchData();
       // console.log(res.id);
-      if (res.id === movie.id) {
-        alert("film sudah pernah ditambahakan");
+      if (parsedMovies === movie.id) {
+        // alert(`${movie.title} sudah ada diFavorites`);
+        Swal.fire(`${movie.title}`, "already in Favorites", "warning");
       } else {
         parsedMovies.push(movie);
         const temp = JSON.stringify(parsedMovies);

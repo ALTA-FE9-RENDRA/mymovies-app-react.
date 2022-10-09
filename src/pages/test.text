@@ -1,3 +1,0 @@
-      let res = parsedMovies.find(({ id }) => id === movie.id);
-
-

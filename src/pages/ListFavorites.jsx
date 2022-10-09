@@ -6,6 +6,9 @@ import Container from "components/LayoutFav";
 import Loading from "components/Loading";
 import CardFav from "components/CardFav";
 
+// ======== SWEET ALERT ==============
+import Swal from "sweetalert2";
+
 function ListFavorites(props) {
   const [datas, setDatas] = useState([]);
   const [skeleton] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
@@ -30,15 +33,12 @@ function ListFavorites(props) {
       return id !== movie.id;
     });
     newDatas.join(" - ");
-    // console.log(newDatas);
-    // console.log(datas);
     const parsed = JSON.stringify(newDatas);
     setDatas(parsed);
     localStorage.setItem("favMovies", parsed);
-    /*
-    fungsi untuk menghapus film dari list favorite, clue-nya pake method filter.
-    Setelah di filter, rubah state (datas) nya dengan yang sudah di filter dan juga localStorage.setItem lagi dengan value yang sudah di filter.
-    */
+    Swal.fire(`${movie.title}`, "Has removed from Favorites", "success");
+
+    fetchData();
   }
 
   return (
