@@ -29,7 +29,7 @@ function App(props) {
       let res = parsedMovies.find(({ id }) => id === movie.id);
       fetchData();
       // console.log(res.id);
-      if (parsedMovies === movie.id) {
+      if (res.id === movie.id) {
         // alert(`${movie.title} sudah ada diFavorites`);
         Swal.fire(`${movie.title}`, "already in Favorites", "warning");
       } else {
