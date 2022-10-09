@@ -37,7 +37,6 @@ function ListFavorites(props) {
     setDatas(parsed);
     localStorage.setItem("favMovies", parsed);
     Swal.fire(`${movie.title}`, "Has removed from Favorites", "success");
-
     fetchData();
   }
 
