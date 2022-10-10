@@ -29,7 +29,7 @@ function App(props) {
       let res = parsedMovies.find(({ id }) => id === movie.id);
       fetchData();
       // console.log(res.id);
-      if (parsedMovies === movie.id) {
+      if (res.id === movie.id) {
         // if (res.id === movie.id) {
         // alert(`${movie.title} sudah ada diFavorites`);
         Swal.fire(`${movie.title}`, "already in Favorites", "warning");
@@ -68,7 +68,7 @@ function App(props) {
 
   return (
     <Container>
-      <div className="w-full flex flex-col ">
+      <div className="w-full flex flex-col bg-white dark:bg-zinc-800 pt-10">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mx-4">
           {loading
             ? skeleton.map((item) => <Loading key={item} />)
@@ -82,6 +82,7 @@ function App(props) {
                 />
               ))}
         </div>
+        <br />
         <ButtonPrimary
           label="Load more"
           onClick={() => {

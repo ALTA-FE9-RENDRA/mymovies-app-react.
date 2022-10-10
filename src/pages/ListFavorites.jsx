@@ -36,13 +36,13 @@ function ListFavorites(props) {
     const parsed = JSON.stringify(newDatas);
     setDatas(parsed);
     localStorage.setItem("favMovies", parsed);
-    Swal.fire(`${movie.title}`, "Has removed from Favorites", "success");
+    Swal.fire(`${movie.title}`, "removed from Favorites", "success");
     fetchData();
   }
 
   return (
-    <Container>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mx-4">
+    <Container className="bg-white dark:bg-zinc-800 pt-10">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 px-4 bg-white dark:bg-zinc-800 pt-10">
         {loading
           ? skeleton.map((item) => <Loading key={item} />)
           : datas.map((data) => (

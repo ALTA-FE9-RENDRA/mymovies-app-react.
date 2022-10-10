@@ -21,11 +21,18 @@ const DetailMovie = (props) => {
 
   return (
     <Container>
-      <div className="w-full h-screen flex flex-col items-center">
-        <h1 className="text-4xl text-center m-5 font-bold text-blue-900">
-          DETAIL MOVIE
-        </h1>
-        <div className="grid grid-flow-col max-w-3xl  bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+      <div
+        style={{
+          backgroundImage: `url(
+            https://image.tmdb.org/t/p/w500${data?.backdrop_path}
+          )`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+          backfaceVisibility: "50%",
+        }}
+        className="w-full pt-10 h-screen  flex flex-col items-center"
+      >
+        <div className="grid grid-flow-col  max-w-3xl  bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
           <img
             className="rounded-t-lg"
             src={`https://image.tmdb.org/t/p/w500${data?.poster_path}`}
