@@ -26,20 +26,16 @@ function App(props) {
     const getMovies = localStorage.getItem("favMovies");
     const parsedMovies = JSON.parse(getMovies);
     if (getMovies) {
-      let res = parsedMovies.find(({ id }) => id === movie.id);
-      fetchData();
-      // console.log(res.id);
-      if (res.id === movie.id) {
-        // if (res.id === movie.id) {
-        // alert(`${movie.title} sudah ada diFavorites`);
-        Swal.fire(`${movie.title}`, "already in Favorites", "warning");
+      const sameMovie = parsedMovies.find((e) => e.id === movie.id);
+      if (sameMovie) {
+        Swal.fire(`${movie.title}`, " already in Favorites", "warning");
       } else {
         parsedMovies.push(movie);
         const temp = JSON.stringify(parsedMovies);
         localStorage.setItem("favMovies", temp);
+        Swal.fire(`${movie.title}`, " add to Favorites", "success");
       }
     } else {
-      // alert("film sudah ada diFavorites ");
       const temp = JSON.stringify([movie]);
       localStorage.setItem("favMovies", temp);
     }

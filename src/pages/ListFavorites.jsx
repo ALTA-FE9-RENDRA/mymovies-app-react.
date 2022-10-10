@@ -41,7 +41,7 @@ function ListFavorites(props) {
   }
 
   return (
-    <Container className="bg-white dark:bg-zinc-800 pt-10">
+    <Container className="bg-white dark:bg-zinc-800 pt-10 overflow-auto">
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 px-4 bg-white dark:bg-zinc-800 pt-10">
         {loading
           ? skeleton.map((item) => <Loading key={item} />)
