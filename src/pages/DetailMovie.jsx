@@ -24,7 +24,7 @@ const DetailMovie = (props) => {
       <div
         style={{
           backgroundImage: `url(
-            https://image.tmdb.org/t/p/w500${data?.backdrop_path}
+            https://image.tmdb.org/t/p/original${data?.backdrop_path}
           )`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
