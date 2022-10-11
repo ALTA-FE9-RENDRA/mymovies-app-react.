@@ -1,7 +1,7 @@
 import { ButtonDetail, ButtonRemove } from "./Button";
 const Card = (e) => {
   return (
-    <div className="flex flex-col text-zinc-800 dark:text-slate-200 bg-white dark:bg-orange-900 dark:bg-opacity-70 dark:border-slate-800  justify-center p-3 shadow-lg rounded-lg border">
+    <div className="flex flex-col text-zinc-800 dark:text-slate-200 bg-white dark:bg-blue-900 dark:bg-opacity-70 dark:border-slate-800  justify-center p-3 shadow-lg rounded-lg border">
       <img
         className="w-full h-full"
         src={`https://image.tmdb.org/t/p/w500${e.image}`}

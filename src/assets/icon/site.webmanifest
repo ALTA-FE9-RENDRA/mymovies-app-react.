@@ -1,6 +1,6 @@
 {
-  "name": "Alta Cinema Icon",
-  "short_name": "IC icon",
+  "name": "",
+  "short_name": "",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",
@@ -13,7 +13,6 @@
       "type": "image/png"
     }
   ],
-  "start_url": "./",
   "theme_color": "#FFFFFF",
   "background_color": "#FFFFFF",
   "display": "standalone"

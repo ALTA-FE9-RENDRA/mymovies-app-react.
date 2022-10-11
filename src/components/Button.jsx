@@ -20,7 +20,7 @@ export const ButtonSecondary = (e) => {
 export const ButtonFavorite = (e) => {
   return (
     <button
-      className="flex px-4 py-2 text-sm font-xl gap-1 text-center text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-yellow-800 dark:hover:bg-orange-600"
+      className="flex px-4 py-2 text-sm font-xl gap-1 text-center text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-zinc-500 dark:hover:bg-zinc-400"
       onClick={e.onClick}
     >
       {e.label}
@@ -45,7 +45,7 @@ export const ButtonFavorite = (e) => {
 export const ButtonDetail = (e) => {
   return (
     <button
-      className="flex px-4 py-2 text-sm font-xl gap-1 text-center text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-zinc-700 dark:hover:bg-zinc-600"
+      className="flex px-4 py-2 text-sm font-xl gap-1 text-center text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-zinc-500 dark:hover:bg-zinc-400"
       onClick={e.onClick}
     >
       {e.label}
@@ -95,7 +95,7 @@ export const ButtonRemove = (e) => {
 export const ButtonWatch = (e) => {
   return (
     <button
-      className="flex px-4 py-2 text-sm font-xl gap-1 text-center text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-zinc-700 dark:hover:bg-orange-600"
+      className="flex px-4 py-2 text-sm font-xl gap-1 text-center text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-zinc-500 dark:hover:bg-zinc-400"
       onClick={e.onClick}
     >
       {e.label}

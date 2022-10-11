@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
-import "styles/App.css";
+import { useDispatch } from "react-redux";
 import axios from "axios";
+import "styles/App.css";
 
+import { setFavorites } from "utils/redux/reducers/reducer";
 import { WithRouter } from "utils/Navigation";
 import { ButtonPrimary } from "components/Button";
 
@@ -13,6 +15,7 @@ import Card from "components/Card";
 import Swal from "sweetalert2";
 
 function App(props) {
+  const dispatch = useDispatch();
   const [datas, setDatas] = useState([]);
   const [skeleton] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
   const [loading, setLoading] = useState(true);
@@ -32,11 +35,13 @@ function App(props) {
       } else {
         parsedMovies.push(movie);
         const temp = JSON.stringify(parsedMovies);
+        dispatch(setFavorites(parsedMovies));
         localStorage.setItem("favMovies", temp);
         Swal.fire(`${movie.title}`, " add to Favorites", "success");
       }
     } else {
       const temp = JSON.stringify([movie]);
+      dispatch(setFavorites([movie]));
       localStorage.setItem("favMovies", temp);
     }
   }
