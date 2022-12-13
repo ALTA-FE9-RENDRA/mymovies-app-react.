@@ -9,6 +9,9 @@ Alta Cinema is movie application is an app where you will get information and li
 Here is a working live demo : https://alta-movies-rendrafe9.vercel.app
 
 ## 🎨 Prototype
+![Screenshot from 2022-12-13 10-57-00](https://user-images.githubusercontent.com/112911127/207225808-375a55c9-5a7a-4ec9-a97d-cbc23c37fc5d.png)
+
+
 
 ## Features
 
@@ -20,7 +23,6 @@ Here is a working live demo : https://alta-movies-rendrafe9.vercel.app
 
 ````
 Install NPM packages
-```sh
 npm install
 ````
 
